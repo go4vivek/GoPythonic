@@ -1,0 +1,25 @@
+
+def main():
+    maxlen=0
+    i=2
+    count=1
+    while i<=1000000:
+         j=i
+         count=1
+         while not j==1:
+                if j%2==0:
+                    j=j/2
+                else:
+                     j=3*j+1
+                count+=1
+         if count>maxlen:
+            maxlen,z=count,i
+         i+=1
+
+
+    print "The longest collatz chain appears to be starting from %d and of length %d" %(z,maxlen)
+
+
+
+if __name__ == '__main__':
+    main()
