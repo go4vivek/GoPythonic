@@ -15,7 +15,7 @@ def shurl(longUrl):
     short_url = js.loads(response)['id']
     return short_url
 fpath=os.path.dirname(os.path.abspath(__file__))+'\sample_tweets_data'
-youtube_regex=r'(https?://)(www\.)?(youtube|youtu)\.(com|be)/(watch\?v=)([^&=%\?]{11})'
+youtube_regex=r'(https?://)(www\.)?(youtube|youtu)\.(com|be)/(watch\?v=)([A-Za-z0-9\-\_]{11})'
 f = open(fpath,'r')
 yt_list=[]
 def read1k():
@@ -40,6 +40,8 @@ for m in f_set:
             df=df.append(pd.Series([longurl,response,int(j_obj['items'][0]['statistics']['likeCount']),int(j_obj['items'][0]['statistics']['viewCount']),int(j_obj['items'][0]['statistics']['dislikeCount']),int(j_obj['items'][0]['statistics']['commentCount'])], index=['URL','Short URL','LikesCount','Number of Views','Dislike Count','Comments Count']), ignore_index=True)
     except urllib2.HTTPError, error:
         contents = error.read()
+#Sorting of the whole dataframe has been done based on decreasing order of number of likes
 result=df.sort('LikesCount', ascending=False)    
 ppath=os.path.dirname(os.path.abspath(__file__))+'\gainsight_output.csv'
 result.to_csv(ppath)
+print 'Finished..Check the hack_output.csv file in the directory'
