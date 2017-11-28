@@ -1,0 +1,45 @@
+import json
+import urllib2
+import pandas as pd
+import httplib2
+import re
+import os
+import simplejson as js
+def shurl(longUrl):
+    API_KEY='AIzaSyDsS__SvdGeE7GjxQ2mGLobmbBah-oB4m8'
+    apiUrl = 'https://www.googleapis.com/urlshortener/v1/url?key=%s' % API_KEY
+    headers = {"Content-type": "application/json"}
+    data = {"longUrl": longUrl}
+    h = httplib2.Http('.cache')
+    headers, response = h.request(apiUrl, "POST", json.dumps(data), headers)
+    short_url = js.loads(response)['id']
+    return short_url
+fpath=os.path.dirname(os.path.abspath(__file__))+'\sample_tweets_data'
+youtube_regex=r'(https?://)(www\.)?(youtube|youtu)\.(com|be)/(watch\?v=)([^&=%\?]{11})'
+f = open(fpath,'r')
+yt_list=[]
+def read1k():
+    return f.read(1024)
+for piece in iter(read1k, ''):
+    x=re.findall(youtube_regex,piece)
+    yt_list.extend(x)
+f_list=[]
+for i in yt_list:
+    f_list.append(i[5])
+f_set_temp=set(f_list)
+f_set=list(f_set_temp)
+df = pd.DataFrame(columns=['URL','Short URL', 'LikesCount','Number of Views','Dislike Count','Comments Count'])
+for m in f_set:
+    try:
+        url='https://www.googleapis.com/youtube/v3/videos?id='+m+'&key=AIzaSyAKQXoE-DZL2HX8mJPR4KXgA6CZu2YjdG8&part=statistics'
+        j = urllib2.urlopen(url)
+        j_obj = json.load(j)
+        longurl = 'https://www.youtube.com/watch?v='+m
+        response=shurl(longurl)
+        if j_obj['items']!=[]:
+            df=df.append(pd.Series([longurl,response,int(j_obj['items'][0]['statistics']['likeCount']),int(j_obj['items'][0]['statistics']['viewCount']),int(j_obj['items'][0]['statistics']['dislikeCount']),int(j_obj['items'][0]['statistics']['commentCount'])], index=['URL','Short URL','LikesCount','Number of Views','Dislike Count','Comments Count']), ignore_index=True)
+    except urllib2.HTTPError, error:
+        contents = error.read()
+result=df.sort('LikesCount', ascending=False)    
+ppath=os.path.dirname(os.path.abspath(__file__))+'\gainsight_output.csv'
+result.to_csv(ppath)
