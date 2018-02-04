@@ -1,0 +1,7 @@
+a=['Jack','Jill','Jack']
+from collections import Counter
+myDict=Counter(a);
+myDict
+
+
+Counter({'Jack': 2, 'Jill': 1})
