@@ -1,0 +1,5 @@
+def string_split(str):
+    list=[]
+    for g in str:
+        list.append(g)
+    return list
