@@ -1,0 +1,11 @@
+def square_root(num):
+    number=num
+    last_guess=number/2.0
+    while True:
+        guess=(last_guess+number/last_guess)/2.0
+        if abs(guess-last_guess)<.00000001:
+            return guess
+        else:
+            last_guess=guess
+        
+    
