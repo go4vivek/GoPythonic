@@ -42,6 +42,6 @@ for m in f_set:
         contents = error.read()
 #Sorting of the whole dataframe has been done based on decreasing order of number of likes
 result=df.sort('LikesCount', ascending=False)    
-ppath=os.path.dirname(os.path.abspath(__file__))+'\gainsight_output.csv'
+ppath=os.path.dirname(os.path.abspath(__file__))+'\analysis_output.csv'
 result.to_csv(ppath)
 print 'Finished..Check the hack_output.csv file in the directory'
