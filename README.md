@@ -1,8 +1,3 @@
-GoPythonic
-===========
-
-Python Code for algorithmic problems &amp; interview puzzles.
-
 This explicit repository houses python implementation of various kinds of general algorithmic problems and programming puzzles asked in interviews.
 
 After experiencing the high turnaround development time of various languages, decision to code in python turned out perfectly.
