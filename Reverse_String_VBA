@@ -1,0 +1,14 @@
+Function reverse_string(s As String)
+Dim Length, iter As Integer
+Dim final_string As String
+Length = Len(s)
+final_string = ""
+For iter = 0 To Length - 1 Step 1
+
+   final_string = final_string & Right(Left(s, Length - iter), 1)
+
+Next
+
+reverse_string = Trim(final_string)
+
+End Function
