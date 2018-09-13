@@ -1,0 +1,25 @@
+'''
+Data file is hosted on https://www.py4e.com/code3/mbox-short.txt
+'''
+
+name = input("Enter file:")
+if len(name) < 1 : name = "mbox-short.txt"
+handle = open(name)
+x=[]
+y=[]
+final=dict()
+handle=open(name,"r")
+for line in handle:
+    if line.startswith("From ")==True:
+        x=line.split()
+        y=x[5].split(":")
+        if y[0] in final.keys():
+            final[y[0]]=final[y[0]]+1
+        else:
+            final[y[0]]=1
+        
+        x=[]
+        y=[]
+z=sorted(final.items())
+for k,v in z:
+  print(k,v)
