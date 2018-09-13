@@ -1,0 +1,19 @@
+
+
+name = input("Enter file:")
+if len(name) < 1 : name = "mbox-short.txt"
+x=[]
+final=dict()
+handle=open(name,"r")
+for line in handle:
+    if line.startswith("From")==True:
+        x=line.lstrip().rstrip().split()
+        if x[1] in final.keys():
+            final[x[1]]=final[x[1]]+1/2
+        else:
+            final[x[1]]=1/2
+        
+        x=[]
+z=sorted(final.items(),key=lambda a:a[1],reverse=True)
+key,value=z[0]
+print(key,int(value))
