@@ -1,0 +1,11 @@
+Sub delete_tabs()
+Dim ws As Worksheet
+Dim pbstr As Integer
+Application.DisplayAlerts = False
+    
+For Each ws In Worksheets
+pbstr = InStr(1, ws.Name, "_NS")
+If (pbstr <> 0) Then ws.Delete
+Next
+
+End Sub

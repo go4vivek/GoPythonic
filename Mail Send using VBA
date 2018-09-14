@@ -1,0 +1,37 @@
+
+Sub SendMailDaily()
+
+    Dim OutApp As Object
+    Dim OutMail As Object
+    Dim strbody As String
+   Dim todays_date As Date
+   todays_date = Date
+    Set OutApp = CreateObject("Outlook.Application")
+    Set OutMail = OutApp.CreateItem(0)
+
+    strbody = "Hi All," & vbNewLine & vbNewLine & _
+              "The harry potter book for " & todays_date & " has been saved at the below location -" & vbNewLine & vbNewLine & _
+              "C:\Harry\Potter\" & Year(Date) & "\" & Month(Date) & "\this\is a great book\I will buy 100 copies this year" & vbNewLine & vbNewLine & _
+              "Please say thanks to JK Rowling as she needs to write more such books" & vbNewLine & vbNewLine & _
+              "Thanks," & vbNewLine & _
+              "Vivek"
+
+              
+
+    On Error Resume Next
+    With OutMail
+    ' please change the mail to whomever you want to send
+        .To = "google_apps_play@gmail.com"
+        .CC = "google_apps_play@gmail.com"
+        .BCC = ""
+        .Subject = "Harry Potter Book | " & Date
+        .Body = strbody
+        .Send
+    End With
+    On Error GoTo 0
+
+    Set OutMail = Nothing
+    Set OutApp = Nothing
+End Sub
+
+

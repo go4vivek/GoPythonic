@@ -1,0 +1,7 @@
+Sub delColumns()
+Dim ws As Worksheet
+For Each ws In Worksheets
+ Columns("FA:FQ").Select
+Selection.Delete Shift:=xlToLeft
+Next
+End Sub

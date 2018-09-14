@@ -1,0 +1,21 @@
+Public Sub getSheetNames()
+'ws object is used to loop through all worksheets
+Dim ws As Worksheet
+'new_ws will point to the new sheet added for containing all names
+Dim new_ws As Worksheet
+Dim i As Integer
+Dim str As String
+str = InputBox("Please Provide a New Name to the Sheet")
+'i is used to loop through consecutive cells of sheet which will output the names
+i = 1
+Application.DisplayAlerts = False
+Sheets(1).Activate
+Set new_ws = Sheets.Add
+new_ws.Name = str
+For Each ws In Worksheets
+new_ws.Activate
+Cells(i, 1).Value = ws.Name
+i = i + 1
+Next
+Application.DisplayAlerts = True
+End Sub

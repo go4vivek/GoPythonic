@@ -1,0 +1,136 @@
+Public Sub TSAtimeseries()
+Dim wb As Workbook
+Dim tm As Workbook
+Dim Filename As String
+Dim Path As String
+Dim lastRow As Long
+Dim rng As Range
+Dim oneRange As Range
+Dim aCell As Range
+Dim rngbft As Range
+Dim aCellbft As Range
+Dim oneRangebft As Range
+Dim lstrowtsa As Integer
+lastRow = ActiveWorkbook.Worksheets("TSA").Range("B" & Rows.Count).End(xlUp).Row
+Dim i As Integer
+i = lastRow + 1
+Application.ScreenUpdating = False
+Application.EnableEvents = False
+Application.Calculation = xlCalculationManual
+Set tm = ThisWorkbook
+Set FldrPicker = Application.FileDialog(msoFileDialogFolderPicker)
+
+    With FldrPicker
+      .Title = "Select A Target Folder"
+      .AllowMultiSelect = False
+        If .Show <> -1 Then GoTo NextCode
+        myPath = .SelectedItems(1) & "\"
+    End With
+
+
+NextCode:
+  myPath = myPath
+  If myPath = "" Then GoTo ResetSettings
+  myExtension = "*.xls"
+
+  myFile = Dir(myPath & myExtension)
+
+
+  Do While myFile <> ""
+  
+      Set wb = Workbooks.Open(Filename:=myPath & myFile)
+      GetBook = Replace(wb.Name, ".xls", "")
+
+      filedate = Format(Mid(GetBook, Len("Margin Call") + 1, Len(GetBook) - Len("Margin Call")), "Short Date")
+      
+      'Here we will paste the data for over collaterlized deals
+      ActiveWorkbook.Worksheets("Pivot").Range("H22:AB22").Copy
+      ThisWorkbook.Worksheets("TSA").Activate
+      Range("B" & i).PasteSpecial xlPasteFormats
+      Range("B" & i).PasteSpecial xlPasteValuesAndNumberFormats
+      
+      ThisWorkbook.Worksheets("TSA").Range("A" & i) = filedate
+      
+      'Here we will paste the data for unsettled barclays transfers
+      
+      wb.Worksheets("Pivot").Range("H26:AB26").Copy
+      ThisWorkbook.Worksheets("BFT").Activate
+      Range("B" & i).PasteSpecial xlPasteFormats
+      Range("B" & i).PasteSpecial xlPasteValuesAndNumberFormats
+      
+      ThisWorkbook.Worksheets("BFT").Range("A" & i) = filedate
+      
+
+      
+      wb.Worksheets("Pivot").Range("H44:AB44").Copy
+      ThisWorkbook.Worksheets("STTS").Activate
+      Range("B" & i).PasteSpecial xlPasteFormats
+      Range("B" & i).PasteSpecial xlPasteValuesAndNumberFormats
+      
+      ThisWorkbook.Worksheets("STTS").Range("A" & i) = filedate
+      ' Close the workbook
+      
+      wb.Close SaveChanges:=False
+      myFile = Dir
+      i = i + 1
+  Loop
+
+
+  MsgBox "Time Series Exported Successfully."
+
+ResetSettings:
+Application.EnableEvents = True
+Application.Calculation = xlCalculationAutomatic
+Application.ScreenUpdating = True
+ 
+    
+
+    
+    lstrowtbft = ThisWorkbook.Worksheets("BFT").Range("B" & Rows.Count).End(xlUp).Row
+    Set rngbft = Range("A5:A" & lstrowtbft)
+
+    With rngbft.Borders
+        .LineStyle = xlContinuous
+        .Color = vbBlack
+        .Weight = xlThin
+    End With
+
+Set oneRangebft = Range("A5:U" & lstrowtbft)
+Set aCellbft = Range("A5")
+oneRangebft.Sort Key1:=aCellbft, Order1:=xlAscending, Header:=xlYes
+
+'Formatting the data for TSA which is data for over collateralized deals
+    
+     ThisWorkbook.Worksheets("TSA").Activate
+  lstrowtsa = Range("B" & Rows.Count).End(xlUp).Row
+  
+    Set rng = Range("A5:A" & lstrowtsa)
+
+    With rng.Borders
+        .LineStyle = xlContinuous
+        .Color = vbBlack
+        .Weight = xlThin
+    End With
+
+Set oneRange = Range("A5:U" & lstrowtsa)
+Set aCell = Range("A5")
+oneRange.Sort Key1:=aCell, Order1:=xlAscending, Header:=xlYes
+
+
+    
+     ThisWorkbook.Worksheets("STTS").Activate
+  lstrowstts = Range("B" & Rows.Count).End(xlUp).Row
+  
+    Set rng = Range("A5:A" & lstrowstts)
+
+    With rng.Borders
+        .LineStyle = xlContinuous
+        .Color = vbBlack
+        .Weight = xlThin
+    End With
+
+Set oneRangestts = Range("A5:U" & lstrowstts)
+Set aCell = Range("A5")
+oneRangestts.Sort Key1:=aCell, Order1:=xlAscending, Header:=xlYes
+
+End Sub

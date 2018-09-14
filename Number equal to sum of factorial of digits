@@ -1,0 +1,14 @@
+'''
+This program tries to find out the numbers which are equal to sum of 
+the factorial of its individual digits
+'''
+
+from math import factorial
+x=[]
+for number in range(1,100000000):
+    a=sum(factorial(int(digit)) for digit in str(number))
+    if a == number and len(str(number))>=3:
+        x.append(a)
+print(x)
+        
+    

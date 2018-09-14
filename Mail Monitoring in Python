@@ -1,0 +1,14 @@
+import win32com.client
+import pythoncom
+class Handler_Class(object):
+    def OnNewMailEx(self, receivedItemsIDs):
+        for ID in receivedItemsIDs.split(","):
+            # Microsoft.Office.Interop.Outlook _MailItem properties:
+            # https://msdn.microsoft.com/en-us/library/microsoft.office.interop.outlook._mailitem_properties.aspx
+            mailItem = outlook.Session.GetItemFromID(ID)
+            dispute=  mailItem.Body.encode( 'ascii', 'ignore' )
+            if(dispute.find("dispute")!=-1):
+                print "Subj: " + mailItem.Subject
+            
+outlook = win32com.client.DispatchWithEvents("Outlook.Application", Handler_Class)
+pythoncom.PumpMessages()
