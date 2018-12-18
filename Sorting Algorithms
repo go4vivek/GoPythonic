@@ -1,0 +1,47 @@
+def main():
+    
+    #print(bubbleSort([11,31,23,2,7,3,109,21]))
+    print(selectionSort([11,31,23,2,7,3,109,21]))
+
+def selectionSort(old_list):
+    list_len=len(old_list)
+    maxLocation=0
+    max_elem=old_list[0]
+    j=0
+    while j<=list_len-1:
+        for iter in range(list_len-j):
+                if max_elem<old_list[iter]:
+                    maxLocation=iter
+                    max_elem=old_list[iter]
+        #print("Maximum element's location is %d and maximum element is %d"% (maxLocation+1,max_elem))
+        temp=old_list[maxLocation]
+        old_list[maxLocation]=old_list[list_len-1-j]
+        old_list[list_len-1-j]=temp
+        j=j+1
+        maxLocation=0
+        max_elem=old_list[0]
+    return old_list    
+
+def bubbleSort(old_list):
+
+    '''
+    old_list=[11,31,23,2,7,3,109,21]
+    
+    '''    
+
+    list_len=len(old_list)
+    x=0
+    for j in range(x,list_len-1):
+        for x in range(list_len-1):
+            if old_list[x]>old_list[x+1]:
+                temp=old_list[x]
+                old_list[x]=old_list[x+1]
+                old_list[x+1]=temp
+                x=x+1
+        j=j+1
+        
+    return old_list
+    
+if __name__=='__main__':
+    main()
+             
