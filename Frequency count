@@ -22,7 +22,7 @@ Improved own provided blessing may peculiar domestic. Sight house has sex never.
 """
 
 
-fp=open("C:\\Users\\srivviv\\Desktop\\frequency.txt")
+fp=open("C:\\Users\\pubg\\Desktop\\frequency.txt")
 lines=fp.read()
 final=dict()
 
