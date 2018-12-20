@@ -1,0 +1,22 @@
+def main():
+    kadane([-2, -3, -4, -1, -2, -1, 5, -3])
+
+def kadane(list):
+    final_max=0
+    max_iter=0
+    for list_iter in list:
+        max_iter=max_iter+list_iter
+        if max_iter<0:
+            max_iter=0
+            final_max=0
+        elif max_iter>0 and final_max<max_iter:
+            
+            final_max=max_iter
+    print("Maximum sum of the subarray is %d" %(final_max))
+    
+            
+                
+    
+if __name__=='__main__':
+    main()
+    
